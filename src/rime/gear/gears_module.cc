@@ -8,6 +8,7 @@
 #include <rime/common.h>
 #include <rime/gear/abc_segmentor.h>
 #include <rime/gear/affix_segmentor.h>
+#include <rime/gear/ai_ranker_filter.h>
 #include <rime/gear/ascii_composer.h>
 #include <rime/gear/ascii_segmentor.h>
 #include <rime/gear/charset_filter.h>
@@ -79,6 +80,7 @@ static void rime_gears_initialize() {
   // filters
   r.Register("simplifier", new SimplifierComponent);
   r.Register("uniquifier", new Component<Uniquifier>);
+  r.Register("ai_ranker", new Component<AiRankerFilter>);
   if (!r.Find("charset_filter")) {  // allow improved implementation
     r.Register("charset_filter", new Component<CharsetFilter>);
   }

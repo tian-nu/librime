@@ -1,9 +1,11 @@
 if(WIN32)
   if(MSVC)
-    set(CMAKE_CXX_FLAGS_DEBUG_INIT "/D_DEBUG /MTd /Zi /Ob0 /Od /RTC1")
-    set(CMAKE_CXX_FLAGS_MINSIZEREL_INIT     "/MT /O1 /Ob1 /D NDEBUG")
-    set(CMAKE_CXX_FLAGS_RELEASE_INIT        "/MT /O2 /Ob2 /D NDEBUG")
-    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO_INIT "/MT /Zi /Od /Ob1 /D NDEBUG")
+    # /utf-8: source and execution character set — required for the
+    # Chinese string literals used across the codebase (AI module, tests).
+    set(CMAKE_CXX_FLAGS_DEBUG_INIT "/D_DEBUG /MTd /Zi /Ob0 /Od /RTC1 /utf-8")
+    set(CMAKE_CXX_FLAGS_MINSIZEREL_INIT     "/MT /O1 /Ob1 /D NDEBUG /utf-8")
+    set(CMAKE_CXX_FLAGS_RELEASE_INIT        "/MT /O2 /Ob2 /D NDEBUG /utf-8")
+    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO_INIT "/MT /Zi /Od /Ob1 /D NDEBUG /utf-8")
   elseif(MINGW)
     set(CMAKE_CXX_FLAGS_RELEASE_INIT "-D_MT -O3 -DNDEBUG")
   else()

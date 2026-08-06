@@ -1,6 +1,7 @@
 aux_source_directory(. rime_api_src)
 aux_source_directory(rime rime_base_src)
 aux_source_directory(rime/algo rime_algo_src)
+aux_source_directory(rime/ai rime_ai_src)
 aux_source_directory(rime/config rime_config_src)
 aux_source_directory(rime/dict rime_dict_src)
 aux_source_directory(rime/gear rime_gears_src)
@@ -12,7 +13,8 @@ endif()
 set(rime_core_module_src
   ${rime_api_src}
   ${rime_base_src}
-  ${rime_config_src})
+  ${rime_config_src}
+  ${rime_ai_src})
 
 # add rc info for windows MSVC build
 if(WIN32)
