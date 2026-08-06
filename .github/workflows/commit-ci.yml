@@ -3,10 +3,11 @@ name: Commit CI
 on:
   push:
     branches:
-      - '!master'
+      - '**'
     tags:
       - '![0-9]+.*'
   pull_request:
+  workflow_dispatch:
 
 jobs:
   lint:

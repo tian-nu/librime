@@ -12,7 +12,8 @@ namespace aiime::lm {
 
 // Interpolated Kneser-Ney n-gram language model — the "AI candidate" core.
 //
-//   P(w | h) = max(c(h,w) - D, 0)/c(h)  +  D * N1+(h*) / c(h) * P(w | suffix(h))
+//   P(w | h) = max(c(h,w) - D, 0)/c(h)  +  D * N1+(h*) / c(h) * P(w |
+//   suffix(h))
 //
 // with the unigram level being the continuation probability
 //
@@ -32,11 +33,15 @@ class NGramModel {
   };
 
   // Trains on lines of whitespace-separated tokens (pre-segmented text).
-  void Train(const std::vector<std::vector<std::string>>& lines, int32_t order = kDefaultOrder,
-             int32_t min_count = 1, double discount = kDefaultDiscount);
+  void Train(const std::vector<std::vector<std::string>>& lines,
+             int32_t order = kDefaultOrder,
+             int32_t min_count = 1,
+             double discount = kDefaultDiscount);
 
-  // Next-word prediction: top-k words under the context, P(w|context) descending.
-  std::vector<Candidate> TopK(const std::vector<std::string>& context, int32_t k) const;
+  // Next-word prediction: top-k words under the context, P(w|context)
+  // descending.
+  std::vector<Candidate> TopK(const std::vector<std::string>& context,
+                              int32_t k) const;
 
   double P(int32_t word, const std::vector<int32_t>& context) const;
   double P1(int32_t word) const;  // continuation probability

@@ -111,7 +111,8 @@ std::vector<std::string> AiRankerFilter::ContextWords() const {
     if (it->type == "thru")
       continue;
     const auto tokens = segmenter_->Segment(it->text);
-    for (auto t = tokens.rbegin(); t != tokens.rend() && words.size() < max_ctx; ++t)
+    for (auto t = tokens.rbegin(); t != tokens.rend() && words.size() < max_ctx;
+         ++t)
       words.push_back(*t);
     if (words.size() >= max_ctx)
       break;
@@ -135,7 +136,8 @@ double AiRankerFilter::Score(const std::string& text,
   if (words.empty())
     return kMinLogP;
   std::vector<int32_t> window = ctx;
-  const size_t max_window = static_cast<size_t>(std::max(1, model_->order() - 1));
+  const size_t max_window =
+      static_cast<size_t>(std::max(1, model_->order() - 1));
   if (window.size() > max_window)
     window.erase(window.begin(), window.end() - max_window);
 
@@ -165,12 +167,14 @@ std::vector<an<Candidate>> AiRankerFilter::Rerank(const CandidateList& pool,
   scored.reserve(pool.size());
   for (size_t i = 0; i < pool.size(); ++i)
     scored.emplace_back(Score(pool[i]->text(), ctx), i);
-  std::stable_sort(scored.begin(), scored.end(),
-                   [](const auto& a, const auto& b) { return a.first > b.first; });
+  std::stable_sort(
+      scored.begin(), scored.end(),
+      [](const auto& a, const auto& b) { return a.first > b.first; });
 
   std::vector<an<Candidate>> out;
   out.reserve(pool.size());
-  const int ai_count = pure ? static_cast<int>(scored.size()) : std::min(head_, static_cast<int>(scored.size()));
+  const int ai_count = pure ? static_cast<int>(scored.size())
+                            : std::min(head_, static_cast<int>(scored.size()));
   if (ai_count <= 0) {
     for (const auto& candidate : pool)
       out.push_back(candidate);

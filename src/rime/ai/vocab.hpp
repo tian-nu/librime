@@ -27,15 +27,19 @@ class Vocab {
   // Training-time: assigns a new id to unseen words.
   int32_t Add(const std::string& word) {
     auto it = word2id_.find(word);
-    if (it != word2id_.end()) return it->second;
+    if (it != word2id_.end())
+      return it->second;
     const int32_t id = static_cast<int32_t>(id2word_.size());
     word2id_.emplace(word, id);
     id2word_.push_back(word);
-    if (word.size() > max_word_bytes_) max_word_bytes_ = word.size();
+    if (word.size() > max_word_bytes_)
+      max_word_bytes_ = word.size();
     return id;
   }
 
-  const std::string& Word(int32_t id) const { return id2word_.at(static_cast<size_t>(id)); }
+  const std::string& Word(int32_t id) const {
+    return id2word_.at(static_cast<size_t>(id));
+  }
 
   size_t size() const { return id2word_.size(); }
 

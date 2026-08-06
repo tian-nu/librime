@@ -6,10 +6,14 @@ namespace {
 
 // Length in bytes of the UTF-8 character starting at data[0].
 size_t Utf8CharLen(unsigned char first) {
-  if (first < 0x80) return 1;
-  if ((first & 0xE0) == 0xC0) return 2;
-  if ((first & 0xF0) == 0xE0) return 3;
-  if ((first & 0xF8) == 0xF0) return 4;
+  if (first < 0x80)
+    return 1;
+  if ((first & 0xE0) == 0xC0)
+    return 2;
+  if ((first & 0xF0) == 0xE0)
+    return 3;
+  if ((first & 0xF8) == 0xF0)
+    return 4;
   return 1;
 }
 

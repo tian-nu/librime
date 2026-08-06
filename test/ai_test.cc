@@ -20,19 +20,28 @@ namespace {
 
 std::vector<std::vector<std::string>> SampleCorpus() {
   return {
-      {"我", "今天", "去", "北京"},   {"我", "今天", "去", "上海"},
-      {"我", "明天", "去", "北京"},   {"他", "今天", "去", "北京"},
-      {"她", "昨天", "去", "广州"},   {"我们", "今天", "开会"},
-      {"明天", "下午", "开会"},       {"下午", "三点", "开会"},
-      {"会议", "在", "明天", "下午"}, {"北京", "的", "天气", "很", "好"},
-      {"上海", "的", "天气", "也", "很", "好"}, {"我", "喜欢", "北京", "的", "胡同"},
-      {"他", "喜欢", "上海", "的", "外滩"},     {"今天", "的", "天气", "很", "冷"},
+      {"我", "今天", "去", "北京"},
+      {"我", "今天", "去", "上海"},
+      {"我", "明天", "去", "北京"},
+      {"他", "今天", "去", "北京"},
+      {"她", "昨天", "去", "广州"},
+      {"我们", "今天", "开会"},
+      {"明天", "下午", "开会"},
+      {"下午", "三点", "开会"},
+      {"会议", "在", "明天", "下午"},
+      {"北京", "的", "天气", "很", "好"},
+      {"上海", "的", "天气", "也", "很", "好"},
+      {"我", "喜欢", "北京", "的", "胡同"},
+      {"他", "喜欢", "上海", "的", "外滩"},
+      {"今天", "的", "天气", "很", "冷"},
   };
 }
 
 // Mirror of AiRankerFilter::Score: sequence log-probability of the candidate
 // text under the committed context, normalized by word count.
-double Score(const NGramModel& m, const Segmenter& seg, const std::string& text,
+double Score(const NGramModel& m,
+             const Segmenter& seg,
+             const std::string& text,
              const std::vector<int32_t>& ctx) {
   const auto words = seg.Segment(text);
   if (words.empty())
@@ -65,8 +74,10 @@ TEST(AiLm, Ranking) {
   m.Train(SampleCorpus());
   EXPECT_EQ(m.TopK({"我", "今天"}, 1)[0].word, m.Id("去"));
   EXPECT_EQ(m.TopK({"我", "今天", "去"}, 1)[0].word, m.Id("北京"));
-  EXPECT_EQ(m.TopK({"他", "明天"}, 1)[0].word, m.Id("下午"));  // backs off to 明天->下午
-  EXPECT_EQ(m.TopK({"我", "猫", "今天"}, 1)[0].word, m.Id("去"));  // unknown word truncates
+  EXPECT_EQ(m.TopK({"他", "明天"}, 1)[0].word,
+            m.Id("下午"));  // backs off to 明天->下午
+  EXPECT_EQ(m.TopK({"我", "猫", "今天"}, 1)[0].word,
+            m.Id("去"));  // unknown word truncates
 }
 
 TEST(AiLm, ProbabilityInvariants) {
