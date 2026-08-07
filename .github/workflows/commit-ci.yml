@@ -21,7 +21,14 @@ jobs:
           sudo apt-get install -y clang-format-18
           sudo ln -sf /usr/bin/clang-format-18 /usr/local/bin/clang-format
       - name: Code style lint
-        run: make clang-format-lint
+        # Only lint the AI module: upstream 1.13.1 sources do not fully
+        # conform to clang-format-18, and reformatting them would pollute
+        # this fork's diff against upstream.
+        run: |
+          clang-format -Werror --dry-run \
+            src/rime/ai/*.hpp src/rime/ai/*.cc \
+            src/rime/gear/ai_ranker_filter.h src/rime/gear/ai_ranker_filter.cc \
+            test/ai_test.cc
 
   linux:
     needs: lint
