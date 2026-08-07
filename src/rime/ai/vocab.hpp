@@ -7,10 +7,12 @@
 #include <unordered_map>
 #include <vector>
 
+#include <rime_api.h>
+
 namespace aiime::lm {
 
 // Token vocabulary. Id 0 is reserved for <unk> (unknown or pruned words).
-class Vocab {
+class RIME_DLL Vocab {
  public:
   static constexpr int32_t kUnknown = 0;
 

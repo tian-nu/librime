@@ -17,6 +17,9 @@ pushd %src_dir%
 ren %boost_tarball% boost-%boost_version%
 cd boost-%boost_version%
 call .\bootstrap.bat
-.\b2 headers
+rem The complete source tarball ships all headers; b2 headers only
+rem normalizes the module layout. On runners where bootstrap cannot
+rem detect the toolset, skipping it is fine for header-only usage.
+if exist ".\b2.exe" .\b2 headers
 popd
 :boost_found

@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include <rime_api.h>
+
 namespace aiime::lm {
 
 // Interpolated Kneser-Ney n-gram language model — the "AI candidate" core.
@@ -22,7 +24,7 @@ namespace aiime::lm {
 // so that a word unseen under a seen context still receives meaningful mass.
 // This is exactly "compute the probability of the next word given the words
 // before it" — candidates are ranked by P(w | context), front to back.
-class NGramModel {
+class RIME_DLL NGramModel {
  public:
   static constexpr int32_t kDefaultOrder = 3;
   static constexpr double kDefaultDiscount = 0.75;
