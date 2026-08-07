@@ -11,12 +11,15 @@ on:
 
 jobs:
   lint:
-    runs-on: macos-14
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout last commit
         uses: actions/checkout@v4
-      - name: Install latest lang-format
-        run: brew update && brew install clang-format
+      - name: Install clang-format 18
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format-18
+          sudo ln -sf /usr/bin/clang-format-18 /usr/local/bin/clang-format
       - name: Code style lint
         run: make clang-format-lint
 
