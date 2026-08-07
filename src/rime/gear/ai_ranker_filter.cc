@@ -10,6 +10,7 @@
 #include <rime/common.h>
 #include <rime/config.h>
 #include <rime/context.h>
+#include <rime/engine.h>
 #include <rime/schema.h>
 #include <rime/ticket.h>
 
